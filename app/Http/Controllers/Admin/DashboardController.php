@@ -17,6 +17,7 @@ use App\Models\PuntoCertificacion;
 use App\Models\MarcoJuridico;
 use App\Models\OrganigramaDepartamento;
 use App\Models\OrganigramaPersona;
+use App\Models\ProgramaNoticia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
@@ -43,6 +44,7 @@ class DashboardController extends Controller
         $totalMarcoJuridico = MarcoJuridico::count();
         $totalDepartamentos = OrganigramaDepartamento::count();
         $totalPersonas = OrganigramaPersona::count();
+        $totalProgramasNoticias = ProgramaNoticia::count();
 
         return view('admin.dashboard.index', compact(
             'totalNoticias',
@@ -58,7 +60,8 @@ class DashboardController extends Controller
             'totalPuntosCertificacion',
             'totalMarcoJuridico',
             'totalDepartamentos',
-            'totalPersonas'
+            'totalPersonas',
+            'totalProgramasNoticias'
         ));
     }
 
@@ -67,6 +70,7 @@ class DashboardController extends Controller
         DB::statement('SET session_replication_role = replica');
 
         $tablas = [
+            'programas_noticias',
             'organigrama_personas',
             'organigrama_departamentos',
             'marco_juridico',
@@ -91,6 +95,9 @@ class DashboardController extends Controller
         }
 
         DB::statement('SET session_replication_role = origin');
+
+        // Reparar secuencias después de limpiar
+        $this->repararTodasLasSecuencias();
     }
 
     public function limpiar()
@@ -126,6 +133,36 @@ class DashboardController extends Controller
         }
     }
 
+    private function repararTodasLasSecuencias()
+    {
+        $tablas = [
+            'users',
+            'noticias',
+            'cursos',
+            'testimonios',
+            'agenda',
+            'organigrama_departamentos',
+            'organigrama_personas',
+            'redes_sociales',
+            'enlaces_menu',
+            'instituciones_aliadas',
+            'linea_tiempo',
+            'coordinaciones_estadales',
+            'puntos_certificacion',
+            'marco_juridico',
+            'programas_noticias',
+        ];
+
+        foreach ($tablas as $tabla) {
+            try {
+                $seqName = $tabla . '_id_seq';
+                DB::statement("SELECT setval('{$seqName}', (SELECT COALESCE(MAX(id), 0) FROM \"{$tabla}\") + 1)");
+            } catch (\Exception $e) {
+                // continuar
+            }
+        }
+    }
+
     public function exportar()
     {
         try {
@@ -153,6 +190,7 @@ class DashboardController extends Controller
                 'coordinaciones_estadales',
                 'puntos_certificacion',
                 'marco_juridico',
+                'programas_noticias',
             ];
 
             $respaldo = [];
@@ -169,7 +207,7 @@ class DashboardController extends Controller
                 'fecha' => now()->toDateTimeString(),
                 'app_name' => config('app.name'),
                 'conexion' => config('database.default'),
-                'version' => '2.0',
+                'version' => '3.0',
             ];
 
             $json = json_encode($respaldo, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
@@ -337,6 +375,7 @@ class DashboardController extends Controller
             'coordinaciones_estadales',
             'puntos_certificacion',
             'marco_juridico',
+            'programas_noticias',
         ];
 
         foreach ($tablas as $tabla) {
@@ -353,13 +392,16 @@ class DashboardController extends Controller
 
         DB::statement('SET session_replication_role = origin');
 
+        // 4. Reparar secuencias después de importar
+        $this->repararTodasLasSecuencias();
+
         File::deleteDirectory($tempDir);
 
         Artisan::call('optimize:clear');
         Artisan::call('storage:link');
 
         return redirect()->route('admin.dashboard')
-            ->with('success', '✅ Respaldo importado correctamente. Datos e imágenes restaurados. Usuarios conservados.');
+            ->with('success', '✅ Respaldo importado correctamente. Datos e imágenes restaurados. Secuencias reparadas.');
     }
 
     private function importarJSON($archivo)
@@ -390,6 +432,7 @@ class DashboardController extends Controller
             'coordinaciones_estadales',
             'puntos_certificacion',
             'marco_juridico',
+            'programas_noticias',
         ];
 
         foreach ($tablas as $tabla) {
@@ -406,9 +449,12 @@ class DashboardController extends Controller
 
         DB::statement('SET session_replication_role = origin');
 
+        // Reparar secuencias después de importar
+        $this->repararTodasLasSecuencias();
+
         Artisan::call('optimize:clear');
 
         return redirect()->route('admin.dashboard')
-            ->with('success', '✅ Base de datos importada correctamente desde JSON. (Sin imágenes)');
+            ->with('success', '✅ Base de datos importada correctamente desde JSON. Secuencias reparadas.');
     }
 }

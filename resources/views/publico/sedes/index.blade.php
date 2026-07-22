@@ -58,6 +58,9 @@
                 <div class="vertice-acordeon-contenido">
                     <p><strong>Dirección:</strong> {{ $c->direccion }}</p>
                     <p><strong>Coordinador(a):</strong> {{ $c->coordinador }}</p>
+                    @if($c->telefono)
+                    <p><strong>Teléfono:</strong> {{ $c->telefono }}</p>
+                    @endif
                     @if($c->enlace_mapa)
                     <a href="{{ $c->enlace_mapa }}" target="_blank" class="btn-conapdis btn-outline-azul btn-sm mt-2">Ver en Google Maps</a>
                     @endif

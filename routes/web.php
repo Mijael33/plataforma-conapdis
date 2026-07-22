@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\LineaTiempoController;
 use App\Http\Controllers\Admin\CoordinacionEstadalController;
 use App\Http\Controllers\Admin\PuntoCertificacionController;
 use App\Http\Controllers\Admin\MarcoJuridicoController;
+use App\Http\Controllers\Admin\ProgramaNoticiaController;
 use App\Http\Controllers\Admin\Auth\AuthenticatedSessionController;
 use Illuminate\Support\Facades\Route;
 
@@ -32,10 +33,8 @@ Route::get('/', [HomeController::class, 'index'])->name('publico.home');
 Route::get('/noticias', [PublicoNoticiaController::class, 'index'])->name('publico.noticias');
 Route::get('/noticias/{slug}', [PublicoNoticiaController::class, 'show'])->name('publico.noticia.show');
 
-// Noticias por tipo
-Route::get('/conapdis-informa', [PublicoNoticiaController::class, 'informa'])->name('publico.noticias.informa');
-Route::get('/conapdis-informa-lsv', [PublicoNoticiaController::class, 'informaLsv'])->name('publico.noticias.informa-lsv');
-Route::get('/conapdito-y-conapdita', [PublicoNoticiaController::class, 'conapdito'])->name('publico.noticias.conapdito');
+// Ruta dinámica para programas de noticias (DEBE ir después de /noticias/{slug})
+Route::get('/noticias/programa/{slug}', [PublicoNoticiaController::class, 'programa'])->name('publico.noticias.programa');
 
 Route::prefix('/institucion')->name('publico.institucion.')->group(function () {
     Route::get('/mision', [InstitucionController::class, 'mision'])->name('mision');
@@ -117,7 +116,8 @@ Route::get('/panel-conapdis-admin', [AuthenticatedSessionController::class, 'cre
 
 // ÚNICO CAMBIO DE SEGURIDAD: 5 intentos de login por minuto
 Route::post('/panel-conapdis-admin', [AuthenticatedSessionController::class, 'store'])
-    ->middleware('throttle:5,1');
+    ->middleware('throttle:5,1')
+    ->name('login');
 
 // Panel accesible para admin Y editor
 Route::prefix('panel-conapdis-admin')->middleware(['auth', 'admin'])->name('admin.')->group(function () {
@@ -133,6 +133,7 @@ Route::prefix('panel-conapdis-admin')->middleware(['auth', 'admin'])->name('admi
     });
     
     Route::resource('noticias', AdminNoticiaController::class);
+    Route::resource('programas-noticias', ProgramaNoticiaController::class);
     Route::resource('cursos', AdminCursoController::class);
     Route::resource('testimonios', AdminTestimonioController::class);
     Route::resource('agenda', AdminAgendaController::class);

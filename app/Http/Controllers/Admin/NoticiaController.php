@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Noticia;
+use App\Models\ProgramaNoticia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
@@ -37,7 +38,7 @@ class NoticiaController extends Controller
             $query->where('publicado', $request->estado == 'activo');
         }
 
-        // 🆕 Filtro de Banner
+        // Filtro de Banner
         if ($request->filled('banner')) {
             $tieneFiltro = true;
             if ($request->banner === 'destacadas') {
@@ -75,7 +76,8 @@ class NoticiaController extends Controller
 
     public function create()
     {
-        return view('admin.noticias.create');
+        $programas = ProgramaNoticia::where('activo', true)->orderBy('orden', 'asc')->get();
+        return view('admin.noticias.create', compact('programas'));
     }
 
     private function generarSlugUnico($titulo, $idExcluir = null)
@@ -115,12 +117,15 @@ class NoticiaController extends Controller
 
     public function store(Request $request)
     {
+        $programas = ProgramaNoticia::where('activo', true)->pluck('slug')->toArray();
+        $programasList = implode(',', $programas);
+
         $request->validate([
             'titulo' => 'required|max:255',
             'extracto' => 'required|max:500',
             'contenido' => 'required',
             'categoria' => 'required|max:100',
-            'tipo' => 'required|in:conapdis-informa,conapdis-informa-lsv,conapdito-y-conapdita',
+            'tipo' => 'required|in:' . $programasList,
             'imagen' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
             'fecha_publicacion' => 'nullable|date',
             'publicado' => 'nullable',
@@ -153,17 +158,21 @@ class NoticiaController extends Controller
 
     public function edit(Noticia $noticia)
     {
-        return view('admin.noticias.edit', compact('noticia'));
+        $programas = ProgramaNoticia::where('activo', true)->orderBy('orden', 'asc')->get();
+        return view('admin.noticias.edit', compact('noticia', 'programas'));
     }
 
     public function update(Request $request, Noticia $noticia)
     {
+        $programas = ProgramaNoticia::where('activo', true)->pluck('slug')->toArray();
+        $programasList = implode(',', $programas);
+
         $request->validate([
             'titulo' => 'required|max:255',
             'extracto' => 'required|max:500',
             'contenido' => 'required',
             'categoria' => 'required|max:100',
-            'tipo' => 'required|in:conapdis-informa,conapdis-informa-lsv,conapdito-y-conapdita',
+            'tipo' => 'required|in:' . $programasList,
             'imagen' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
             'fecha_publicacion' => 'nullable|date',
             'publicado' => 'nullable',

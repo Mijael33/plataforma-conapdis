@@ -22,13 +22,17 @@
                     <label class="form-label fw-bold">Orden</label>
                     <input type="number" name="orden" class="form-control rounded-3" value="{{ old('orden', 0) }}">
                 </div>
+                <div class="col-md-6">
+                    <label class="form-label fw-bold">Teléfono</label>
+                    <input type="text" name="telefono" class="form-control rounded-3" value="{{ old('telefono') }}" placeholder="Ej: 0212-7620039">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label fw-bold">Enlace de Google Maps (opcional)</label>
+                    <input type="url" name="enlace_mapa" class="form-control rounded-3" value="{{ old('enlace_mapa') }}" placeholder="https://maps.app.goo.gl/...">
+                </div>
                 <div class="col-12">
                     <label class="form-label fw-bold">Dirección</label>
                     <textarea name="direccion" class="form-control rounded-3" rows="2" required>{{ old('direccion') }}</textarea>
-                </div>
-                <div class="col-12">
-                    <label class="form-label fw-bold">Enlace de Google Maps (opcional)</label>
-                    <input type="url" name="enlace_mapa" class="form-control rounded-3" value="{{ old('enlace_mapa') }}" placeholder="https://maps.app.goo.gl/...">
                 </div>
                 <div class="col-12">
                     <div class="form-check">

@@ -19,11 +19,12 @@
                     <input type="text" name="categoria" class="form-control rounded-3" value="{{ old('categoria') }}" required placeholder="Ej: Salud, Cultura, Deporte">
                 </div>
                 <div class="col-md-3">
-                    <label class="form-label fw-bold">Tipo de Noticia</label>
+                    <label class="form-label fw-bold">Programa de Noticias</label>
                     <select name="tipo" class="form-select rounded-3" required>
-                        <option value="conapdis-informa" {{ old('tipo') == 'conapdis-informa' ? 'selected' : '' }}>CONAPDIS Informa</option>
-                        <option value="conapdis-informa-lsv" {{ old('tipo') == 'conapdis-informa-lsv' ? 'selected' : '' }}>CONAPDIS Informa LSV</option>
-                        <option value="conapdito-y-conapdita" {{ old('tipo') == 'conapdito-y-conapdita' ? 'selected' : '' }}>Conapdito y Conapdita</option>
+                        <option value="">Seleccione un programa...</option>
+                        @foreach($programas as $programa)
+                            <option value="{{ $programa->slug }}" {{ old('tipo') == $programa->slug ? 'selected' : '' }}>{{ $programa->nombre }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="col-12">

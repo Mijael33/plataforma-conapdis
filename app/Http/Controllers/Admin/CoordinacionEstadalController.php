@@ -16,7 +16,8 @@ class CoordinacionEstadalController extends Controller
             $query->where(function($q) use ($request) {
                 $q->where('estado', 'ilike', '%'.$request->buscar.'%')
                   ->orWhere('direccion', 'ilike', '%'.$request->buscar.'%')
-                  ->orWhere('coordinador', 'ilike', '%'.$request->buscar.'%');
+                  ->orWhere('coordinador', 'ilike', '%'.$request->buscar.'%')
+                  ->orWhere('telefono', 'ilike', '%'.$request->buscar.'%');
             });
         }
 
@@ -42,6 +43,7 @@ class CoordinacionEstadalController extends Controller
         $validated = $request->validate([
             'estado' => 'required|max:255',
             'direccion' => 'required',
+            'telefono' => 'nullable|max:50',
             'coordinador' => 'required|max:255',
             'enlace_mapa' => 'nullable|url|max:500',
             'orden' => 'nullable|integer',
@@ -58,6 +60,7 @@ class CoordinacionEstadalController extends Controller
         $validated = $request->validate([
             'estado' => 'required|max:255',
             'direccion' => 'required',
+            'telefono' => 'nullable|max:50',
             'coordinador' => 'required|max:255',
             'enlace_mapa' => 'nullable|url|max:500',
             'orden' => 'nullable|integer',

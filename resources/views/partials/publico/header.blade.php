@@ -66,9 +66,14 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle {{ request()->routeIs('publico.noticias*') ? 'active' : '' }}" role="button" data-bs-toggle="dropdown">Noticias</a>
                     <ul class="dropdown-menu">
-                        <li><a href="{{ route('publico.noticias.informa') }}">CONAPDIS Informa</a></li>
-                        <li><a href="{{ route('publico.noticias.informa-lsv') }}">CONAPDIS Informa LSV</a></li>
-                        <li><a href="{{ route('publico.noticias.conapdito') }}">Conapdito y Conapdita</a></li>
+                        <li><a href="{{ route('publico.noticias') }}" style="color: var(--amarillo) !important; font-weight: 600;">Ver todas las noticias</a></li>
+                        @php $programasNoticias = App\Models\ProgramaNoticia::where('activo', true)->orderBy('orden', 'asc')->get(); @endphp
+                        @if($programasNoticias->count() > 0)
+                        <li class="border-top mt-1 pt-1"></li>
+                        @endif
+                        @foreach($programasNoticias as $programa)
+                        <li><a href="{{ route('publico.noticias.programa', $programa->slug) }}">{{ $programa->nombre }}</a></li>
+                        @endforeach
                     </ul>
                 </li>
                 <li><a href="{{ route('publico.cursos') }}" class="{{ request()->routeIs('publico.cursos*') ? 'active' : '' }}">Formaciones</a></li>

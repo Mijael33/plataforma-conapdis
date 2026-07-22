@@ -65,6 +65,16 @@ return new class extends Migration
             $table->timestamps();
         });
 
+        // Programas de Noticias (dinámico, como Enlaces del menú)
+        Schema::create('programas_noticias', function (Blueprint $table) {
+            $table->id();
+            $table->string('nombre');
+            $table->string('slug')->unique();
+            $table->integer('orden')->default(0);
+            $table->boolean('activo')->default(true);
+            $table->timestamps();
+        });
+
         // Cursos
         Schema::create('cursos', function (Blueprint $table) {
             $table->id();
@@ -182,6 +192,7 @@ return new class extends Migration
             $table->id();
             $table->string('estado');
             $table->text('direccion');
+            $table->string('telefono')->nullable();
             $table->string('coordinador');
             $table->string('enlace_mapa')->nullable();
             $table->integer('orden')->default(0);
@@ -218,6 +229,7 @@ return new class extends Migration
 
     public function down(): void
     {
+        Schema::dropIfExists('programas_noticias');
         Schema::dropIfExists('marco_juridico');
         Schema::dropIfExists('puntos_certificacion');
         Schema::dropIfExists('coordinaciones_estadales');

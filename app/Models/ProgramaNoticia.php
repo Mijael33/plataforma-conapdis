@@ -5,18 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CoordinacionEstadal extends Model
+class ProgramaNoticia extends Model
 {
     use HasFactory;
 
-    protected $table = 'coordinaciones_estadales';
+    protected $table = 'programas_noticias';
 
     protected $fillable = [
-        'estado',
-        'direccion',
-        'telefono',
-        'coordinador',
-        'enlace_mapa',
+        'nombre',
+        'slug',
         'orden',
         'activo',
     ];

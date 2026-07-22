@@ -16,7 +16,7 @@
                     <li><a href="{{ route('publico.institucion.vision') }}">Visión</a></li>
                     <li><a href="{{ route('publico.institucion.resena') }}">Reseña Histórica</a></li>
                     <li><a href="{{ route('publico.institucion.principios') }}">Principios y Valores</a></li>
-                    <li><a href="{{ route('publico.noticias.informa') }}">CONAPDIS Informa</a></li>
+                    <li><a href="{{ route('publico.noticias') }}">Noticias</a></li>
                     <li><a href="{{ route('publico.cursos') }}">Formaciones</a></li>
                 </ul>
             </div>
