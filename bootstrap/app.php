@@ -14,10 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'admin' => \App\Http\Middleware\AdminAuth::class,
             'solo.admin' => \App\Http\Middleware\SoloAdmin::class,
-        ]);
-
-        $middleware->validateCsrfTokens(except: [
-            'panel-fames-admin',
+            'permiso' => \App\Http\Middleware\VerificarPermiso::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

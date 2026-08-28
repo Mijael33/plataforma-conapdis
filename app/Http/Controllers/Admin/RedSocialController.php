@@ -27,7 +27,7 @@ class RedSocialController extends Controller
             case 'antiguo': $query->orderBy('created_at', 'asc'); break;
             case 'az': $query->orderBy('nombre_cuenta', 'asc'); break;
             case 'za': $query->orderBy('nombre_cuenta', 'desc'); break;
-            default: $query->orderBy('created_at', 'desc');
+            default: $query->orderBy('destacado', 'desc')->orderBy('orden', 'asc');
         }
 
         $redes = $query->paginate(20)->appends($request->query());
@@ -50,10 +50,16 @@ class RedSocialController extends Controller
         return redirect()->route('admin.redes.index')->with('success', 'Cuenta creada exitosamente.');
     }
 
-    public function edit(RedSocial $rede) { return view('admin.redes.edit', compact('rede')); }
-
-    public function update(Request $request, RedSocial $rede)
+    public function edit($id)
     {
+        $rede = RedSocial::findOrFail($id);
+        return view('admin.redes.edit', compact('rede'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $rede = RedSocial::findOrFail($id);
+
         $validated = $request->validate([
             'red' => 'required|in:instagram,facebook,tiktok,youtube,telegram',
             'nombre_cuenta' => 'required|max:255',
@@ -66,5 +72,10 @@ class RedSocialController extends Controller
         return redirect()->route('admin.redes.index')->with('success', 'Cuenta actualizada exitosamente.');
     }
 
-    public function destroy(RedSocial $rede) { $rede->delete(); return redirect()->route('admin.redes.index')->with('success', 'Cuenta eliminada exitosamente.'); }
+    public function destroy($id)
+    {
+        $rede = RedSocial::findOrFail($id);
+        $rede->delete();
+        return redirect()->route('admin.redes.index')->with('success', 'Cuenta eliminada exitosamente.');
+    }
 }

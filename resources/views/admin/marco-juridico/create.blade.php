@@ -25,10 +25,12 @@
                 <div class="col-md-6">
                     <label class="form-label fw-bold">Imagen</label>
                     <input type="file" name="imagen" class="form-control rounded-3">
+                    <small class="text-muted">Formatos: JPG, PNG, WebP. Máximo 2MB</small>
                 </div>
                 <div class="col-md-6">
                     <label class="form-label fw-bold">Documento PDF</label>
                     <input type="file" name="documento" class="form-control rounded-3" accept=".pdf">
+                    <small class="text-muted">Solo PDF. Máximo 50MB</small>
                 </div>
                 <div class="col-12">
                     <div class="form-check">

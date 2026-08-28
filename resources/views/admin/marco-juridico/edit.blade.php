@@ -28,6 +28,7 @@
                     <div class="mb-2"><img src="{{ asset('storage/'.$marcoJuridico->imagen) }}" style="max-width:100px;border-radius:8px;"></div>
                     @endif
                     <input type="file" name="imagen" class="form-control rounded-3">
+                    <small class="text-muted">Formatos: JPG, PNG, WebP. Máximo 2MB. Dejar vacío para mantener la actual.</small>
                 </div>
                 <div class="col-md-6">
                     <label class="form-label fw-bold">Documento PDF</label>
@@ -35,6 +36,7 @@
                     <div class="mb-2"><a href="{{ asset('storage/'.$marcoJuridico->documento) }}" target="_blank" class="badge bg-info">Ver PDF actual</a></div>
                     @endif
                     <input type="file" name="documento" class="form-control rounded-3" accept=".pdf">
+                    <small class="text-muted">Solo PDF. Máximo 50MB. Dejar vacío para mantener el actual.</small>
                 </div>
                 <div class="col-12">
                     <div class="form-check">

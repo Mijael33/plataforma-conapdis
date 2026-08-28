@@ -1,6 +1,6 @@
 @extends('layouts.publica')
 
-@section('titulo', 'Gestión Estadal y Municipal')
+@section('titulo', 'Seguimiento y Control Territorial')
 
 @section('contenido')
 
@@ -8,7 +8,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8">
-                <h1 class="pagina-titulo mb-4">Gerencia de Gestión Estadal y Municipal</h1>
+                <h1 class="pagina-titulo mb-4">Gerencia de Seguimiento y Control Territorial</h1>
                 <div class="contenido-institucional">
                     
                     <div class="servicio-detalle-header">
@@ -106,7 +106,7 @@
                         <li><a href="{{ route('publico.servicios.fiscalizacion') }}">Fiscalización</a></li>
                         <li><a href="{{ route('publico.servicios.gestion-social') }}">Gestión Social</a></li>
                         <li><a href="{{ route('publico.servicios.atencion-ciudadano') }}">Atención al Ciudadano</a></li>
-                        <li><a href="{{ route('publico.servicios.gestion-estadal') }}" class="activo">Gestión Estadal y Municipal</a></li>
+                        <li><a href="{{ route('publico.servicios.gestion-estadal') }}" class="activo">Seguimiento y Control Territorial</a></li>
                     </ul>
                 </div>
             </div>

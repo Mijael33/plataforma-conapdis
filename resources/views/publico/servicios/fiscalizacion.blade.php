@@ -78,7 +78,7 @@
                         <li><a href="{{ route('publico.servicios.fiscalizacion') }}" class="activo">Fiscalización</a></li>
                         <li><a href="{{ route('publico.servicios.gestion-social') }}">Gestión Social</a></li>
                         <li><a href="{{ route('publico.servicios.atencion-ciudadano') }}">Atención al Ciudadano</a></li>
-                        <li><a href="{{ route('publico.servicios.gestion-estadal') }}">Gestión Estadal y Municipal</a></li>
+                        <li><a href="{{ route('publico.servicios.gestion-estadal') }}">Seguimiento y Control Territorial</a></li>
                     </ul>
                 </div>
             </div>

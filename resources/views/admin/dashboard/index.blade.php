@@ -7,6 +7,7 @@
     <h2 class="mb-4" style="color: #1a3b5d; font-weight: 700;">Panel de Control</h2>
     
     {{-- Estadísticas --}}
+    @if($puedeVerMetricas)
     <div class="row g-3 mb-4">
         @php
         $stats = [
@@ -43,8 +44,10 @@
         </div>
         @endforeach
     </div>
+    @endif
 
     {{-- Gráficos --}}
+    @if($puedeVerMetricas)
     <div class="row g-4">
         <div class="col-lg-8">
             <div class="card border-0 shadow-sm rounded-4 p-4">
@@ -59,9 +62,10 @@
             </div>
         </div>
     </div>
+    @endif
 
-    {{-- Mantenimiento y Respaldo (SOLO admin) --}}
-    @if(auth()->user()->isAdmin())
+    {{-- Mantenimiento y Respaldo --}}
+    @if($puedeGestionarMantenimiento)
     <div class="row g-4 mt-4">
         <div class="col-12">
             <div class="card border-0 shadow-sm rounded-4 p-4">
@@ -264,6 +268,7 @@
 @endsection
 
 @section('scripts')
+@if($puedeVerMetricas)
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script>
 const statsData = [
@@ -319,4 +324,5 @@ new Chart(ctxPie, {
     }
 });
 </script>
+@endif
 @endsection

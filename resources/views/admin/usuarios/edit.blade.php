@@ -4,7 +4,7 @@
 
 @section('contenido')
 <div class="container-fluid">
-    <h2 style="color: #1a3b5d; font-weight: 700;" class="mb-4">Editar Usuario</h2>
+    <h2 style="color: #1a3b5d; font-weight: 700;" class="mb-4">Editar Usuario: {{ $usuario->nombre_completo }}</h2>
 
     @if($errors->any())
     <div class="alert alert-danger rounded-3">
@@ -21,28 +21,52 @@
             @csrf
             @method('PUT')
             <div class="row g-3">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <label class="form-label fw-bold">Nombre *</label>
-                    <input type="text" name="name" class="form-control rounded-3" value="{{ old('name', $usuario->name) }}" required>
+                    <input type="text" name="nombre" class="form-control rounded-3" value="{{ old('nombre', $usuario->nombre) }}" required>
                 </div>
-                <div class="col-md-6">
-                    <label class="form-label fw-bold">Email *</label>
+                <div class="col-md-4">
+                    <label class="form-label fw-bold">Apellido *</label>
+                    <input type="text" name="apellido" class="form-control rounded-3" value="{{ old('apellido', $usuario->apellido) }}" required>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-bold">Cédula *</label>
+                    <input type="text" name="cedula" class="form-control rounded-3" value="{{ old('cedula', $usuario->cedula) }}" required maxlength="20">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-bold">Cargo</label>
+                    <input type="text" name="cargo" class="form-control rounded-3" value="{{ old('cargo', $usuario->cargo) }}">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-bold">Correo (Usuario) *</label>
                     <input type="email" name="email" class="form-control rounded-3" value="{{ old('email', $usuario->email) }}" required>
                 </div>
                 <div class="col-md-4">
-                    <label class="form-label fw-bold">Nueva Contraseña (dejar vacío para no cambiar)</label>
-                    <input type="password" name="password" class="form-control rounded-3">
-                </div>
-                <div class="col-md-4">
-                    <label class="form-label fw-bold">Confirmar Contraseña</label>
-                    <input type="password" name="password_confirmation" class="form-control rounded-3">
-                </div>
-                <div class="col-md-4">
                     <label class="form-label fw-bold">Rol *</label>
-                    <select name="rol" class="form-select rounded-3" required>
-                        <option value="admin" {{ old('rol', $usuario->rol) == 'admin' ? 'selected' : '' }}>Administrador</option>
-                        <option value="editor" {{ old('rol', $usuario->rol) == 'editor' ? 'selected' : '' }}>Editor</option>
+                    <select name="rol_id" class="form-select rounded-3" required>
+                        <option value="">Seleccione un rol...</option>
+                        @foreach($roles as $rol)
+                        <option value="{{ $rol->id }}" {{ old('rol_id', $usuario->rol_id) == $rol->id ? 'selected' : '' }}>{{ $rol->nombre }}</option>
+                        @endforeach
                     </select>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label fw-bold">Nueva Contraseña (dejar vacío para no cambiar)</label>
+                    <div class="input-group">
+                        <input type="password" name="password" id="password" class="form-control rounded-3">
+                        <button type="button" class="btn btn-outline-secondary" onclick="togglePassword('password')" tabindex="-1">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label fw-bold">Confirmar Contraseña</label>
+                    <div class="input-group">
+                        <input type="password" name="password_confirmation" id="password_confirmation" class="form-control rounded-3">
+                        <button type="button" class="btn btn-outline-secondary" onclick="togglePassword('password_confirmation')" tabindex="-1">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        </button>
+                    </div>
                 </div>
                 <div class="col-12">
                     <div class="form-check">
@@ -58,4 +82,17 @@
         </form>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+<script>
+function togglePassword(id) {
+    const input = document.getElementById(id);
+    if (input.type === 'password') {
+        input.type = 'text';
+    } else {
+        input.type = 'password';
+    }
+}
+</script>
 @endsection

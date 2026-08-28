@@ -45,7 +45,7 @@ class MarcoJuridicoController extends Controller
             'titulo' => 'required|max:255',
             'descripcion' => 'nullable',
             'imagen' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
-            'documento' => 'nullable|mimes:pdf|max:10240',
+            'documento' => 'nullable|mimes:pdf|max:51200',
             'orden' => 'nullable|integer',
         ]);
 
@@ -65,18 +65,21 @@ class MarcoJuridicoController extends Controller
             ->with('success', 'Documento creado exitosamente.');
     }
 
-    public function edit(MarcoJuridico $marcoJuridico)
+    public function edit($id)
     {
+        $marcoJuridico = MarcoJuridico::findOrFail($id);
         return view('admin.marco-juridico.edit', compact('marcoJuridico'));
     }
 
-    public function update(Request $request, MarcoJuridico $marcoJuridico)
+    public function update(Request $request, $id)
     {
+        $marcoJuridico = MarcoJuridico::findOrFail($id);
+
         $validated = $request->validate([
             'titulo' => 'required|max:255',
             'descripcion' => 'nullable',
             'imagen' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
-            'documento' => 'nullable|mimes:pdf|max:10240',
+            'documento' => 'nullable|mimes:pdf|max:51200',
             'orden' => 'nullable|integer',
         ]);
 
@@ -96,8 +99,9 @@ class MarcoJuridicoController extends Controller
             ->with('success', 'Documento actualizado exitosamente.');
     }
 
-    public function destroy(MarcoJuridico $marcoJuridico)
+    public function destroy($id)
     {
+        $marcoJuridico = MarcoJuridico::findOrFail($id);
         $marcoJuridico->delete();
         return redirect()->route('admin.marco-juridico.index')
             ->with('success', 'Documento eliminado exitosamente.');

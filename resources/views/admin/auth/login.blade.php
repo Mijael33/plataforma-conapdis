@@ -99,14 +99,14 @@
         
         @if($errors->any())
         <div class="login-error">
-            {{ $errors->first() }}
+            {{ $errors->first('email') }}
         </div>
         @endif
         
         <form action="{{ route('login') }}" method="POST">
             @csrf
             <div class="mb-3">
-                <label for="email" class="form-label">Usuario</label>
+                <label for="email" class="form-label">Correo Electrónico</label>
                 <input type="email" name="email" id="email" class="form-control" placeholder="Ingrese su usuario" value="{{ old('email') }}" required autofocus>
             </div>
             <div class="mb-4">

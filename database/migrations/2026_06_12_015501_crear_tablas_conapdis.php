@@ -8,14 +8,28 @@ return new class extends Migration
 {
     public function up(): void
     {
+        // Roles
+        Schema::create('roles', function (Blueprint $table) {
+            $table->id();
+            $table->string('nombre')->unique();
+            $table->text('descripcion')->nullable();
+            $table->boolean('es_admin')->default(false);
+            $table->json('permisos')->nullable();
+            $table->boolean('activo')->default(true);
+            $table->timestamps();
+        });
+
         // Usuarios
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('nombre');
+            $table->string('apellido');
+            $table->string('cedula')->unique();
+            $table->string('cargo')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('rol', ['admin', 'editor'])->default('editor');
+            $table->foreignId('rol_id')->nullable()->constrained('roles')->onDelete('set null');
             $table->boolean('activo')->default(true);
             $table->rememberToken();
             $table->timestamps();
@@ -229,7 +243,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('programas_noticias');
         Schema::dropIfExists('marco_juridico');
         Schema::dropIfExists('puntos_certificacion');
         Schema::dropIfExists('coordinaciones_estadales');
@@ -243,10 +256,12 @@ return new class extends Migration
         Schema::dropIfExists('testimonios');
         Schema::dropIfExists('cursos');
         Schema::dropIfExists('noticias');
+        Schema::dropIfExists('programas_noticias');
         Schema::dropIfExists('cache_locks');
         Schema::dropIfExists('cache');
         Schema::dropIfExists('sessions');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('users');
+        Schema::dropIfExists('roles');
     }
 };

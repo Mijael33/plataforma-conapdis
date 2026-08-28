@@ -5,8 +5,16 @@
         
         <div class="ms-auto d-flex align-items-center">
             <span class="me-3 text-muted">
-                {{ auth()->user()->name }} 
-                <span class="badge bg-primary">{{ auth()->user()->rol }}</span>
+                {{ auth()->user()->nombre_completo }} 
+                @if(auth()->user()->rol)
+                    @if(auth()->user()->rol->es_admin)
+                    <span class="badge bg-danger">{{ auth()->user()->rol->nombre }}</span>
+                    @else
+                    <span class="badge bg-primary">{{ auth()->user()->rol->nombre }}</span>
+                    @endif
+                @else
+                    <span class="badge bg-secondary">Sin rol</span>
+                @endif
             </span>
             
             <form action="{{ route('admin.logout') }}" method="POST" class="m-0">

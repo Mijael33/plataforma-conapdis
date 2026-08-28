@@ -15,6 +15,10 @@
     <div class="alert alert-success rounded-3">{{ session('success') }}</div>
     @endif
 
+    @if(session('error'))
+    <div class="alert alert-danger rounded-3">{{ session('error') }}</div>
+    @endif
+
     <div class="card border-0 shadow-sm rounded-4">
         <div class="card-body p-0">
             <div class="table-responsive">
@@ -22,6 +26,8 @@
                     <thead style="background-color: #f8fafc;">
                         <tr>
                             <th class="ps-4">Nombre</th>
+                            <th>Cédula</th>
+                            <th>Cargo</th>
                             <th>Email</th>
                             <th>Rol</th>
                             <th>Estado</th>
@@ -31,13 +37,19 @@
                     <tbody>
                         @forelse($usuarios as $usuario)
                         <tr>
-                            <td class="ps-4">{{ $usuario->name }}</td>
+                            <td class="ps-4">{{ $usuario->nombre_completo }}</td>
+                            <td>{{ $usuario->cedula }}</td>
+                            <td>{{ $usuario->cargo ?? '—' }}</td>
                             <td>{{ $usuario->email }}</td>
                             <td>
-                                @if($usuario->rol == 'admin')
-                                <span class="badge bg-primary">Administrador</span>
+                                @if($usuario->rol)
+                                    @if($usuario->rol->es_admin)
+                                    <span class="badge bg-danger">{{ $usuario->rol->nombre }}</span>
+                                    @else
+                                    <span class="badge bg-info">{{ $usuario->rol->nombre }}</span>
+                                    @endif
                                 @else
-                                <span class="badge bg-info">Editor</span>
+                                <span class="badge bg-secondary">Sin rol</span>
                                 @endif
                             </td>
                             <td>
@@ -58,7 +70,7 @@
                             </td>
                         </tr>
                         @empty
-                        <tr><td colspan="5" class="text-center py-4 text-muted">No hay usuarios registrados</td></tr>
+                        <tr><td colspan="7" class="text-center py-4 text-muted">No hay usuarios registrados</td></tr>
                         @endforelse
                     </tbody>
                 </table>

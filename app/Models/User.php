@@ -11,10 +11,13 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     protected $fillable = [
-        'name',
+        'nombre',
+        'apellido',
+        'cedula',
+        'cargo',
         'email',
         'password',
-        'rol',
+        'rol_id',
         'activo',
     ];
 
@@ -32,13 +35,26 @@ class User extends Authenticatable
         ];
     }
 
-    public function isAdmin(): bool
+    public function rol()
     {
-        return $this->rol === 'admin';
+        return $this->belongsTo(Rol::class);
     }
 
-    public function isEditor(): bool
+    public function isAdmin(): bool
     {
-        return $this->rol === 'editor';
+        return $this->rol && $this->rol->es_admin;
+    }
+
+    public function tienePermiso($area, $accion): bool
+    {
+        if (!$this->rol) {
+            return false;
+        }
+        return $this->rol->tienePermiso($area, $accion);
+    }
+
+    public function getNombreCompletoAttribute(): string
+    {
+        return $this->nombre . ' ' . $this->apellido;
     }
 }

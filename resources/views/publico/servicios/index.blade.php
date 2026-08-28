@@ -68,14 +68,14 @@
                         </a>
                     </div>
                     
-                    {{-- Gestión Estadal y Municipal --}}
+                    {{-- Seguimiento y Control Territorial --}}
                     <div class="col-lg-12">
                         <a href="{{ route('publico.servicios.gestion-estadal') }}" class="text-decoration-none">
                             <div class="servicio-card-index">
                                 <div class="servicio-card-icono" style="width: 70px; height: 70px; background: linear-gradient(135deg, #003097, #001e5c);">
                                     <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ffda00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
                                 </div>
-                                <h4>Gestión Estadal y Municipal</h4>
+                                <h4>Seguimiento y Control Territorial</h4>
                                 <p>Seguimiento y planificación de las acciones inherentes a la atención integral de las personas con discapacidad en el territorio nacional.</p>
                                 <span class="ver-todas-link">Haz clic aquí →</span>
                             </div>

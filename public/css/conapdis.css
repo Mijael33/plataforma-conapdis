@@ -2802,46 +2802,78 @@ td, th,
     box-shadow: 0 15px 35px rgba(0,48,151,0.15), 0 0 0 1px rgba(255,218,0,0.2) !important;
 }
 
-/* ================== PAGINACIÓN ================== */
+/* ================== PAGINACIÓN BOOTSTRAP 5 ================== */
 .pagination {
     display: flex;
     justify-content: center;
     gap: 0.3rem;
     margin-top: 1.5rem;
+    flex-wrap: wrap;
 }
 
 .pagination .page-item .page-link {
     border-radius: 8px;
     padding: 0.5rem 0.9rem;
-    color: var(--azul-institucional);
-    border: 1px solid var(--gris-borde);
-    background: var(--blanco);
+    color: #003097;
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
     font-weight: 500;
     font-size: 0.9rem;
     transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 38px;
+    height: 38px;
 }
 
 .pagination .page-item.active .page-link {
-    background: var(--azul-institucional);
-    color: var(--amarillo);
-    border-color: var(--azul-institucional);
+    background: #003097;
+    color: #ffda00;
+    border-color: #003097;
+    font-weight: 600;
 }
 
 .pagination .page-item .page-link:hover {
-    background: var(--azul-institucional);
-    color: var(--amarillo);
-    border-color: var(--azul-institucional);
+    background: #003097;
+    color: #ffda00;
+    border-color: #003097;
 }
 
 .pagination .page-item.disabled .page-link {
     opacity: 0.5;
     pointer-events: none;
+    background: #f3f4f6;
 }
 
-/* Ocultar los SVG enormes de Laravel */
+/* Iconos SVG de flechas (anterior/siguiente) */
 .pagination svg {
     width: 16px !important;
     height: 16px !important;
+}
+
+/* Ocultar texto "Showing X to Y of Z results" si aparece */
+.pagination + p,
+.pagination ~ p {
+    text-align: center;
+    color: #6b7280;
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+}
+
+/* Responsive para móviles */
+@media (max-width: 576px) {
+    .pagination .page-link {
+        padding: 0.4rem 0.6rem;
+        min-width: 32px;
+        height: 32px;
+        font-size: 0.8rem;
+    }
+    
+    .pagination svg {
+        width: 12px !important;
+        height: 12px !important;
+    }
 }
 
 /* ================== LAZY LOADING ================== */

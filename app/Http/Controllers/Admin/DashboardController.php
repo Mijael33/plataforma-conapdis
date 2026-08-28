@@ -30,6 +30,17 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        $user = auth()->user();
+
+        // Verificar permisos del dashboard
+        $puedeVerMetricas = $user->isAdmin() || $user->tienePermiso('dashboard', 'ver_metricas');
+        $puedeGestionarMantenimiento = $user->isAdmin() || $user->tienePermiso('dashboard', 'gestionar_mantenimiento');
+
+        // Si no tiene ninguno de los dos permisos
+        if (!$puedeVerMetricas && !$puedeGestionarMantenimiento) {
+            abort(403, 'No tienes permisos para acceder al Panel de Control.');
+        }
+
         $totalNoticias = Noticia::count();
         $totalCursos = Curso::count();
         $totalTestimonios = Testimonio::count();
@@ -61,7 +72,9 @@ class DashboardController extends Controller
             'totalMarcoJuridico',
             'totalDepartamentos',
             'totalPersonas',
-            'totalProgramasNoticias'
+            'totalProgramasNoticias',
+            'puedeVerMetricas',
+            'puedeGestionarMantenimiento'
         ));
     }
 
@@ -96,12 +109,16 @@ class DashboardController extends Controller
 
         DB::statement('SET session_replication_role = origin');
 
-        // Reparar secuencias después de limpiar
         $this->repararTodasLasSecuencias();
     }
 
     public function limpiar()
     {
+        $user = auth()->user();
+        if (!$user->isAdmin() && !$user->tienePermiso('dashboard', 'gestionar_mantenimiento')) {
+            abort(403, 'No tienes permisos para gestionar mantenimiento.');
+        }
+
         try {
             $this->limpiarSoloDatos();
 
@@ -165,6 +182,11 @@ class DashboardController extends Controller
 
     public function exportar()
     {
+        $user = auth()->user();
+        if (!$user->isAdmin() && !$user->tienePermiso('dashboard', 'gestionar_mantenimiento')) {
+            abort(403, 'No tienes permisos para gestionar mantenimiento.');
+        }
+
         try {
             $fecha = date('Y-m-d_H-i-s');
             $zipFilename = 'respaldo_conapdis_' . $fecha . '.zip';
@@ -191,6 +213,7 @@ class DashboardController extends Controller
                 'puntos_certificacion',
                 'marco_juridico',
                 'programas_noticias',
+                'roles',
             ];
 
             $respaldo = [];
@@ -207,7 +230,7 @@ class DashboardController extends Controller
                 'fecha' => now()->toDateTimeString(),
                 'app_name' => config('app.name'),
                 'conexion' => config('database.default'),
-                'version' => '3.0',
+                'version' => '4.0',
             ];
 
             $json = json_encode($respaldo, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
@@ -288,6 +311,11 @@ class DashboardController extends Controller
 
     public function importar(Request $request)
     {
+        $user = auth()->user();
+        if (!$user->isAdmin() && !$user->tienePermiso('dashboard', 'gestionar_mantenimiento')) {
+            abort(403, 'No tienes permisos para gestionar mantenimiento.');
+        }
+
         $request->validate([
             'archivo_respaldo' => 'required|file|mimes:json,zip|max:102400',
         ]);
@@ -336,10 +364,8 @@ class DashboardController extends Controller
                 ->with('error', '❌ El archivo base_datos.json no tiene el formato correcto.');
         }
 
-        // 1. Limpiar solo datos (sin borrar imágenes)
         $this->limpiarSoloDatos();
 
-        // 2. Copiar imágenes del ZIP al storage público
         $imagenesPath = $tempDir . '/imagenes';
         if (File::isDirectory($imagenesPath)) {
             $archivos = File::allFiles($imagenesPath);
@@ -357,7 +383,6 @@ class DashboardController extends Controller
             }
         }
 
-        // 3. Insertar datos
         DB::statement('SET session_replication_role = replica');
 
         $tablas = [
@@ -376,6 +401,7 @@ class DashboardController extends Controller
             'puntos_certificacion',
             'marco_juridico',
             'programas_noticias',
+            'roles',
         ];
 
         foreach ($tablas as $tabla) {
@@ -392,7 +418,6 @@ class DashboardController extends Controller
 
         DB::statement('SET session_replication_role = origin');
 
-        // 4. Reparar secuencias después de importar
         $this->repararTodasLasSecuencias();
 
         File::deleteDirectory($tempDir);
@@ -433,6 +458,7 @@ class DashboardController extends Controller
             'puntos_certificacion',
             'marco_juridico',
             'programas_noticias',
+            'roles',
         ];
 
         foreach ($tablas as $tabla) {
@@ -449,7 +475,6 @@ class DashboardController extends Controller
 
         DB::statement('SET session_replication_role = origin');
 
-        // Reparar secuencias después de importar
         $this->repararTodasLasSecuencias();
 
         Artisan::call('optimize:clear');
