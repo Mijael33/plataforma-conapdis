@@ -88,8 +88,11 @@ Route::get('/redes/{red}', function ($red) {
 
 Route::view('/instituciones-aliadas', 'publico.instituciones.index')->name('publico.instituciones');
 Route::view('/contactanos', 'publico.contactanos')->name('publico.contactanos');
+
+// Páginas legales y acerca de
 Route::view('/privacidad', 'publico.privacidad')->name('publico.privacidad');
 Route::view('/terminos', 'publico.terminos')->name('publico.terminos');
+Route::view('/acerca-de', 'publico.acerca-de')->name('publico.acerca-de');
 
 Route::get('/sedes', function () {
     $coordinaciones = App\Models\CoordinacionEstadal::where('activo', true)->orderBy('orden', 'asc')->get();

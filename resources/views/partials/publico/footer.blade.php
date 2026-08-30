@@ -69,7 +69,12 @@
         </div>
         
         <div class="footer-bottom text-center mt-4 pt-3">
-            <p class="mb-0">&copy; {{ date('Y') }} CONAPDIS - Consejo Nacional para las Personas con Discapacidad. Todos los derechos reservados.</p>
+            <p class="mb-0">
+                &copy; {{ date('Y') }} CONAPDIS - Todos los derechos reservados. | 
+                <a href="{{ route('publico.acerca-de') }}" class="text-decoration-none" style="color: #ffda00;">Acerca de</a> | 
+                <a href="{{ route('publico.privacidad') }}" class="text-decoration-none" style="color: #ffda00;">Privacidad</a> | 
+                <a href="{{ route('publico.terminos') }}" class="text-decoration-none" style="color: #ffda00;">Términos</a>
+            </p>
         </div>
     </div>
 </footer>
