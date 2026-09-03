@@ -108,7 +108,7 @@
                             <ul class="list-unstyled mb-0">
                                 <li class="mb-3">
                                     <strong>Correo:</strong><br>
-                                    <a href="mailto:conapdis@gmail.com" class="text-decoration-none" style="color: #003097;">conapdis@gmail.com</a>
+                                    <a href="mailto:conapdisvenezuelagob@gmail.com" class="text-decoration-none" style="color: #003097;">conapdisvenezuelagob@gmail.com</a>
                                 </li>
                                 <li class="mb-3">
                                     <strong>Teléfonos:</strong><br>

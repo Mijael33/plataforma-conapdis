@@ -630,6 +630,30 @@
         <span class="tooltip-atajo">Ctrl+Espacio: detener</span>
     </button>
     
+    <script>
+    function verificarTamanoTexto() {
+        // Buscar elementos con font-size inline grande
+        let textoAgrandado = false;
+        
+        document.querySelectorAll('[style*="font-size"]').forEach(el => {
+            const style = el.getAttribute('style');
+            const match = style.match(/font-size:\s*([\d.]+)px/);
+            if (match && parseFloat(match[1]) > 20) {
+                textoAgrandado = true;
+            }
+        });
+        
+        if (textoAgrandado) {
+            document.body.classList.add('uw-texto-grande');
+        } else {
+            document.body.classList.remove('uw-texto-grande');
+        }
+    }
+    
+    setInterval(verificarTamanoTexto, 1000);
+    document.addEventListener('DOMContentLoaded', verificarTamanoTexto);
+    </script>
+    
     @yield('scripts')
 </body>
 </html>

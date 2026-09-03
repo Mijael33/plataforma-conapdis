@@ -2802,6 +2802,81 @@ td, th,
     box-shadow: 0 15px 35px rgba(0,48,151,0.15), 0 0 0 1px rgba(255,218,0,0.2) !important;
 }
 
+/* ============================================
+   MODO TEXTO GRANDE - USERWAY
+   ============================================ */
+
+html, body {
+    overflow-x: hidden;
+}
+
+/* MENÚ: Colapsa a hamburguesa SOLO cuando hay texto grande */
+body.uw-texto-grande .conapdis-menu {
+    display: none !important;
+}
+
+body.uw-texto-grande .conapdis-busqueda-form {
+    display: none !important;
+}
+
+body.uw-texto-grande .navbar-toggler {
+    display: block !important;
+}
+
+/* CUANDO SE HACE CLIC EN HAMBURGUESA */
+body.uw-texto-grande .navbar-collapse.show .conapdis-menu {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.25rem !important;
+    padding: 0.5rem 0 !important;
+}
+
+body.uw-texto-grande .navbar-collapse.show .conapdis-menu > li > a {
+    display: block !important;
+    width: 100% !important;
+    text-align: left !important;
+    padding: 0.6rem 0.75rem !important;
+    font-size: 0.9rem !important;
+}
+
+/* El collapse se muestra correctamente */
+body.uw-texto-grande .navbar-collapse.show {
+    display: block !important;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+/* BANNER: Arreglar texto cuando se agranda */
+body.uw-texto-grande .banner-overlay {
+    display: flex;
+    align-items: center;
+}
+
+body.uw-texto-grande .banner-contenido {
+    max-width: 100%;
+}
+
+body.uw-texto-grande .banner-contenido h2 {
+    font-size: 1.8rem !important;
+    line-height: 1.3 !important;
+    word-wrap: break-word !important;
+    white-space: normal !important;
+    overflow: visible !important;
+}
+
+body.uw-texto-grande .banner-contenido p {
+    font-size: 1rem !important;
+    line-height: 1.5 !important;
+    word-wrap: break-word !important;
+    white-space: normal !important;
+    overflow: visible !important;
+}
+
+body.uw-texto-grande .banner-etiqueta {
+    font-size: 0.8rem !important;
+    white-space: normal !important;
+}
+
 /* ================== PAGINACIÓN BOOTSTRAP 5 ================== */
 .pagination {
     display: flex;

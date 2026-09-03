@@ -72,7 +72,7 @@
                         <p class="texto-institucional mb-3">Si tiene alguna duda o inquietud con respecto a esta Política de Privacidad o al tratamiento de sus datos, puede ponerse en contacto con nuestra Gerencia de Atención Ciudadana:</p>
                         <div class="card bg-light border-0 p-3">
                             <ul class="list-unstyled mb-0 texto-institucional">
-                                <li class="mb-2"><strong>Correo institucional:</strong> <a href="mailto:conapdis@gmail.com" class="text-decoration-none" style="color: #1a3b5d;">conapdis@gmail.com</a></li>
+                                <li class="mb-2"><strong>Correo institucional:</strong> <a href="mailto:conapdisvenezuelagob@gmail.com" class="text-decoration-none" style="color: #1a3b5d;">conapdisvenezuelagob@gmail.com</a></li>
                                 <li class="mb-2"><strong>Central telefónica:</strong> 0212-7620039 / 0212-7627959</li>
                                 <li><strong>Dirección:</strong> Sede Principal CONAPDIS, Caracas, República Bolivariana de Venezuela.</li>
                             </ul>
