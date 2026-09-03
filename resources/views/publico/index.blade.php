@@ -13,7 +13,6 @@
                     <div class="slide-bg" style="background-image: url('{{ $bn->imagen ? asset('storage/'.$bn->imagen) : asset('images/banner/banner1.jpg') }}');">
                         <div class="banner-overlay">
                             <div class="container">
-                                {{-- Escritorio: contenido normal --}}
                                 <div class="banner-contenido d-none d-md-block">
                                     <span class="banner-etiqueta">{{ $bn->categoria }}</span>
                                     <h2>{{ $bn->titulo }}</h2>
@@ -21,7 +20,6 @@
                                     <a href="{{ route('publico.noticia.show', $bn->slug) }}" class="btn-conapdis btn-azul">Ver más</a>
                                 </div>
                             </div>
-                            {{-- Móvil: botón centrado abajo, FUERA del container --}}
                             <div class="d-md-none" style="pointer-events: auto; position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); z-index: 20;">
                                 <button type="button" class="btn-conapdis btn-azul btn-sm" data-bs-toggle="modal" data-bs-target="#bannerModalMovil" style="font-size: 0.8rem; padding: 0.4rem 1.5rem; white-space: nowrap;">
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 0.3rem;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
@@ -66,7 +64,7 @@
     </div>
 </section>
 
-{{-- Modal ÚNICO para móvil (se actualiza dinámicamente) --}}
+{{-- Modal ÚNICO para móvil --}}
 <div class="modal fade banner-modal-mobile" id="bannerModalMovil" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content" style="background: linear-gradient(135deg, #003097, #001e5c); color: #fff; border: 2px solid #ffda00; border-radius: 16px; margin: 1rem;">
@@ -189,6 +187,26 @@
                         @endforeach
                     </ul>
                 </div>
+                
+                {{-- Buscador de Certificación CONAPDIS --}}
+                <div class="sidebar-card mt-4">
+                    <div class="text-center mb-3">
+                        <div class="d-inline-flex align-items-center justify-content-center rounded-4 mb-2" style="width: 50px; height: 50px; background: linear-gradient(135deg, #003097, #001e5c);">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffda00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><path d="M8 11h6"></path><path d="M11 8v6"></path></svg>
+                        </div>
+                        <h5 class="fw-bold" style="color: #1a3b5d; margin-bottom: 0;">Consulta de Certificación</h5>
+                        <p class="text-muted small mb-2">Verifica si una persona está certificada por CONAPDIS</p>
+                    </div>
+                    
+                    <div class="input-group mb-2">
+                        <input type="text" id="cedulaInput" class="form-control rounded-3" placeholder="Ingrese número de cédula" maxlength="10" inputmode="numeric" pattern="[0-9]*" style="font-size: 0.9rem;">
+                        <button onclick="buscarCedula()" class="btn rounded-3 ms-1" style="background: #003097; color: #ffda00; font-weight: 600; font-size: 0.85rem; white-space: nowrap;">
+                            Consultar
+                        </button>
+                    </div>
+                    
+                    <div id="resultadoBusqueda" style="display: none; margin-top: 10px; padding: 12px; text-align: center; border-radius: 8px; font-weight: 600; font-size: 0.85rem;"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -259,6 +277,97 @@ document.addEventListener("DOMContentLoaded", function () {
         
         actualizarModalBanner();
         bannerSlider.addEventListener('slid.bs.carousel', actualizarModalBanner);
+    }
+});
+
+// ============================================================
+// 👇 CONFIGURACIÓN DE LA API DE CERTIFICACIÓN
+// ============================================================
+const CONFIG_CERTIFICACION = {
+    apiUrl: 'https://web.conapdis.gob.ve/api/v1/publico/pcd/verificar-certificacion',
+    clientKey: 'd68267ee320bdc5e8aa7768e6f7c8ea9bdfa47bccddf92a3',
+    website: '' // ← AQUÍ se cambia en producción
+};
+
+// Función de búsqueda de cédula CONAPDIS
+function buscarCedula() {
+    const cedula = document.getElementById('cedulaInput').value.trim();
+    const res = document.getElementById('resultadoBusqueda');
+    
+    if (cedula === '') {
+        res.style.display = 'block';
+        res.style.background = '#fff3cd';
+        res.style.color = '#856404';
+        res.innerHTML = '⚠️ Por favor ingrese un número de cédula.';
+        return;
+    }
+    
+    if (!/^\d+$/.test(cedula)) {
+        res.style.display = 'block';
+        res.style.background = '#fff3cd';
+        res.style.color = '#856404';
+        res.innerHTML = '⚠️ La cédula debe contener solo números (sin letras).';
+        return;
+    }
+    
+    res.style.display = 'block';
+    res.style.background = '#f0f4ff';
+    res.style.color = '#003097';
+    res.innerHTML = '🔍 Buscando...';
+    
+    fetch(CONFIG_CERTIFICACION.apiUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'X-Conapdis-Client-Key': CONFIG_CERTIFICACION.clientKey
+        },
+        body: JSON.stringify({
+            cedula: cedula,
+            website: CONFIG_CERTIFICACION.website
+        })
+    })
+    .then(r => {
+        if (!r.ok) {
+            console.error('HTTP Error:', r.status);
+            throw new Error('HTTP ' + r.status);
+        }
+        return r.json();
+    })
+    .then(data => {
+        console.log('Respuesta API:', data);
+        if (data.certificado === true) {
+            res.style.background = '#d4edda';
+            res.style.color = '#155724';
+            res.innerHTML = '✅ PERSONA CERTIFICADA POR EL CONAPDIS';
+        } else {
+            res.style.background = '#f8d7da';
+            res.style.color = '#721c24';
+            res.innerHTML = '❌ PERSONA NO CERTIFICADA POR EL CONAPDIS';
+        }
+    })
+    .catch(e => {
+        res.style.background = '#fff3cd';
+        res.style.color = '#856404';
+        res.innerHTML = '⚠️ Servicio no disponible temporalmente. Por favor intente más tarde.';
+        console.error('Error:', e.message);
+    });
+}
+
+// Permitir búsqueda al presionar Enter y solo números
+document.addEventListener('DOMContentLoaded', function() {
+    const cedulaInput = document.getElementById('cedulaInput');
+    if (cedulaInput) {
+        cedulaInput.addEventListener('input', function() {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+        
+        cedulaInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                buscarCedula();
+            }
+        });
     }
 });
 </script>

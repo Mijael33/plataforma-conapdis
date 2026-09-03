@@ -16,7 +16,7 @@
                 <div class="contenido-institucional">
                     <h3 style="color: #1a3b5d; font-weight: 700;">Definición y Enfoque Clínico</h3>
                     <p class="texto-institucional">
-                        La discapacidad intelectual y psicosocial comprende una serie de condiciones caracterizadas por limitaciones significativas tanto en el funcionamiento cognitivo general como en la conducta adaptativa. Esto afecta las habilidades conceptuales, sociales y prácticas cotidianas. Desde la perspectiva biopsicosocial, no se considera una enfermedad intrínseca, sino el resultado de la interacción entre las barreras del entorno y las capacidades funcionales del individuo. Clínicamente, abarca desde condiciones del neurodesarrollo hasta trastornos del espectro afectivo o de la personalidad que impactan el procesamiento de información y la autorregulación.
+                        La discapacidad intelectual y psicosocial comprende una serie de condiciones caracterizadas por limitaciones significativas tanto en el funcionamiento cognitivo general como en la conducta adaptativa. Esto afecta las habilidades conceptuales, sociales y prácticas cotidianas. Desde la perspectiva biopsicosocial, no se considera una enfermedad intrínseca, sino el resultado de la interacción entre las barreras del entorno y las capacidades funcionales del individuo. Clínicamente, abarca desde condiciones del neurodesarrollo hasta trastornos del espectro autista o de la personalidad que impactan el procesamiento de información y la autorregulación.
                     </p>
 
                     <h3 style="color: #1a3b5d; font-weight: 700; margin-top: 2rem;">Barreras Comunes y Desafíos</h3>

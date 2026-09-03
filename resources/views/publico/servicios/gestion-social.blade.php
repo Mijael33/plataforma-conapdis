@@ -96,6 +96,7 @@
                         <li><a href="{{ route('publico.servicios.fiscalizacion') }}">Fiscalización</a></li>
                         <li><a href="{{ route('publico.servicios.gestion-social') }}" class="activo">Gestión Social</a></li>
                         <li><a href="{{ route('publico.servicios.atencion-ciudadano') }}">Atención al Ciudadano</a></li>
+                        <li><a href="{{ route('publico.servicios.consultoria-juridica') }}">Consultoría Jurídica</a></li>
                         <li><a href="{{ route('publico.servicios.gestion-estadal') }}">Seguimiento y Control Territorial</a></li>
                     </ul>
                 </div>

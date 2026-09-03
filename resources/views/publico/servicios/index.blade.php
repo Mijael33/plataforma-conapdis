@@ -68,8 +68,22 @@
                         </a>
                     </div>
                     
+                    {{-- Consultoría Jurídica --}}
+                    <div class="col-lg-6">
+                        <a href="{{ route('publico.servicios.consultoria-juridica') }}" class="text-decoration-none">
+                            <div class="servicio-card-index">
+                                <div class="servicio-card-icono" style="width: 70px; height: 70px; background: linear-gradient(135deg, #003097, #001e5c);">
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ffda00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                                </div>
+                                <h4>Consultoría Jurídica</h4>
+                                <p>Orientación legal gratuita para personas con discapacidad, sus familias y el sector empleador.</p>
+                                <span class="ver-todas-link">Ver más →</span>
+                            </div>
+                        </a>
+                    </div>
+                    
                     {{-- Seguimiento y Control Territorial --}}
-                    <div class="col-lg-12">
+                    <div class="col-lg-6">
                         <a href="{{ route('publico.servicios.gestion-estadal') }}" class="text-decoration-none">
                             <div class="servicio-card-index">
                                 <div class="servicio-card-icono" style="width: 70px; height: 70px; background: linear-gradient(135deg, #003097, #001e5c);">
@@ -77,7 +91,7 @@
                                 </div>
                                 <h4>Seguimiento y Control Territorial</h4>
                                 <p>Seguimiento y planificación de las acciones inherentes a la atención integral de las personas con discapacidad en el territorio nacional.</p>
-                                <span class="ver-todas-link">Haz clic aquí →</span>
+                                <span class="ver-todas-link">Ver más →</span>
                             </div>
                         </a>
                     </div>

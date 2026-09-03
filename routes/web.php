@@ -68,6 +68,7 @@ Route::prefix('/servicios')->name('publico.servicios.')->group(function () {
     Route::view('/fiscalizacion', 'publico.servicios.fiscalizacion')->name('fiscalizacion');
     Route::view('/gestion-social', 'publico.servicios.gestion-social')->name('gestion-social');
     Route::view('/atencion-ciudadano', 'publico.servicios.atencion-ciudadano')->name('atencion-ciudadano');
+    Route::view('/consultoria-juridica', 'publico.servicios.consultoria-juridica')->name('consultoria-juridica');
     Route::view('/gestion-estadal', 'publico.servicios.gestion-estadal')->name('gestion-estadal');
 });
 

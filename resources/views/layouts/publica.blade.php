@@ -211,7 +211,7 @@
     </script>
 
     {{-- ResponsiveVoice --}}
-    <script src="https://code.responsivevoice.org/responsivevoice.js?key=B1UeESDQ"></script>
+    <script src="https://code.responsivevoice.org/responsivevoice.js?key=wM114ORM"></script>
     <script>
     let rvPaused = false;
     let rvSpeaking = false;
@@ -603,7 +603,7 @@
     <script>
     (function(d) {
         var s = d.createElement("script");
-        s.setAttribute("data-account", "TU_USERWAY_ID");
+        s.setAttribute("data-account", "G7rljmsW7j");
         s.setAttribute("src", "https://cdn.userway.org/widget.js");
         s.setAttribute("defer", "true");
         s.setAttribute("data-size", "small");
